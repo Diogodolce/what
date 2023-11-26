@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>BLACKSIDER API by Fabio Cavalcanti</title>
+</head>
+<body>
+
+	<div id="app">
+		<h1>BLACKSIDER API</h1>
+		<h3>Assine agora o Clube Onde Comer: <a href="https://clubeondecomer.com.br/">clique aqui</a></h3>
+		<h3>Instagram caso queira me seguir: <a href="https://www.instagram.com/ofabiocavalcanti/">clique aqui</a></h3>
+		<h3>Perfil no Forum - Engaja la meu anjo: <a href="https://www.blacksidersociety.pro/profile/571-f%C3%A1bio_willian_c%C3%A2mara_pires_cavalcanti/">clique aqui</a></h3>
+		<p>BLACKSIDER API - Aproveita ai meu Calabreso</p>    
+		<img src="" alt="QR Code" id="qrcode">
+		<h3>Black Logs:</h3>
+		<ul class="logs"></ul>
+	</div>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js" crossorigin="anonymous"></script>
+	<script>
+		$(document).ready(function() {
+			var socket = io();
+
+			socket.on('message', function(msg) {
+				$('.logs').append($('<li>').text(msg));
+			});
+
+			socket.on('qr', function(src) {
+				$('#qrcode').attr('src', src);
+				$('#qrcode').show();
+			});
+
+			socket.on('ready', function(data) {
+				$('#qrcode').hide();
+			});
+
+			socket.on('authenticated', function(data) {
+				$('#qrcode').hide();
+			});
+		});
+	</script>
+</body>
+</html>
